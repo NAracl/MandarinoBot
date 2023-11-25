@@ -3,7 +3,7 @@ import random
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 from discord.utils import get
-TOKEN = 'MTE3NzgwNTU4MDYzMTU0ODAwNQ.GotYz0.6xEutGykLDPtem0tBg2DwhHIM6PrQH4-zh6YMk'
+TOKEN = 'token aca'
 intents = discord.Intents.all()
 intents.message_content = True
 
