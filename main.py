@@ -3,7 +3,7 @@ import random
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 from discord.utils import get
-TOKEN = 'token aca'
+TOKEN = 'Token aca'
 intents = discord.Intents.all()
 intents.message_content = True
 
@@ -57,6 +57,7 @@ async def nuevo_rol(ctx, color):
         hex_color = f"0x{color}"
         await serv.create_role(name=f'{member.name}', colour=discord.Colour(int(hex_color,base=16)))
         await ctx.send('```Rol creado con éxito!```')
+        await member.add_roles()
 
 @client.command(aliases=['eliminar',"eliminarrol"])
 @has_permissions(manage_roles=True)
@@ -108,7 +109,18 @@ async def help(ctx):
 async def rol_help(ctx):
     Embe = discord.Embed(title='Añadir Rol', description='Este comando sirve para añadir nuevos roles al servidor.')
     Embe.add_field(name='Otros nombres: addrole, rol', value='El uso correcto de este comando es ```-m rol (código hex del color)```')
-    Embe.add_field(name='¿Cómo saber el valor hex de un color?', value='Debes ir al buscador de tu preferencia (Google especialmente) y buscar "color hex", de ahí te aparecerá una ventana para seleccionar tu color y debajo aparecerá el color hex, lo copiarás y después lo incluiras en el comando como se menciono arriba', inline=False)
+    Embe.add_field(name='¿Cómo saber el valor hex de un color?', value='[Aquí](https://www.color-hex.com/) podrás encontrar una página en donde podrás encontrar los códigos hex para cada color, en caso que sea uno distinto, en la parte superior aparece una ventana en la cual podrás seleccionar el color de tu elección.', inline=False)
+    await ctx.send(embed=Embe)
+@help.command(aliases=['Eliminar','eliminar','erol','eliminarrol'])
+async def eliminar_help(ctx):
+    Embe = discord.Embed(title='Eliminar Rol', description='Este comando sirve para eliminar roles del mismo nombre del miembro del servidor.')
+    Embe.add_field(name='Otros nombres: addrole, rol', value='El uso correcto de este comando es ```-m eliminar (nombre de usuario)```')
+    await ctx.send(embed=Embe)
+@help.command(aliases=['arol','qrol','asignarrol','quitarrol'])
+async def arol_qrol(ctx):
+    Embe = discord.Embed(title='Asignar/Quitar Roles', description='Este comando sirve para dar o quitar roles del mismo nombre a un miembro del servidor.')
+    Embe.add_field(name='Asignar rol (arol, asignarrol)', value='El uso correcto de este comando es ```-m arol (nombre del rol) (nombre de usuario)```')
+    Embe.add_field(name='Quitar rol (qrol, quitarrol)', value='El uso correcto de este comando es ```-m qrol (nombre de rol) (nombre de usuario)```')
     await ctx.send(embed=Embe)
 #CORRER TOKEN
 client.run(TOKEN)
