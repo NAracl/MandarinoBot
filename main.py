@@ -30,7 +30,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error,commands.errors.MemberNotFound):
         await ctx.send("`Parece que no puedo encontrar la persona, asegurate de escribir tal cual el nombre con mayúsculas o minúsculas!`")
     elif isinstance(error,commands.errors.MissingPermissions):
-        await ctx.send("`Mis permisos no pueden hacer la acción dicha, quizás falta que mi rol tenga mayor prioridad`")
+        await ctx.send("`Parece que los permisos para usar este comando no coinciden`")
     else:
         print(error)
         await ctx.send('`Error y reporte mandado automáticamente!`')
@@ -39,8 +39,18 @@ async def on_command_error(ctx, error):
 @client.command(aliases=['p'])
 async def saludo(ctx):
     img = random.choice(img_mandarino)
-    file = discord.File(img)
-    await ctx.send(file= file)
+    file = discord.File(img, filename=img)
+    Embed = discord.Embed(title=None,description=None)
+    Embed.set_image(url=f'attachment://{img}')
+    if img == "mandarino1.webp":
+        Embed.set_footer(text="Créditos a @satorinya (Satori)")
+    elif img == "mandarino2.webp":
+        Embed.set_footer(text="Créditos a @smylk (Esmaili666)")
+    elif img == "mandarino3.webp":
+        Embed.set_footer(text="Créditos a @staryomi (StaryPro888)")
+    elif img == "mandarino4.webp":
+        Embed.set_footer(text="Créditos a @prek69 (Prek)")
+    await ctx.send(file=file,embed=Embed)
 
 #COMANDOS DE ROL
 @client.command(aliases=['role','addrole','rol','añadirrol'])
@@ -101,16 +111,21 @@ client.remove_command("help")
 
 @client.group(aliases=["ayuda"])
 async def help(ctx):
+    file = discord.File("banner1.png", filename= 'banner1.png')
     Embed = discord.Embed(title="Menú de Ayuda",description="Aquí hay una lista completa de todos los comandos de Mandarino actualmente, puedes encontrar más información con -m help (comando de tu elección)" )
     Embed.add_field(name='Roles', value='Añadir rol (rol), Eliminar rol (Eliminar), Asignar rol (arol), Quitar rol (qrol)')
-    await ctx.send(embed=Embed)
+    Embed.set_image(url="attachment://banner1.png")
+    Embed.set_footer(text="Créditos a @smylk (Esmaili666)")
+    await ctx.send(file=file,embed=Embed)
 
 @help.command(aliases=['Añadir rol','añadir rol','rol','addrole'])
 async def rol_help(ctx):
+    file = discord.File("colorhex.png", filename= 'colorhex.png')
     Embe = discord.Embed(title='Añadir Rol', description='Este comando sirve para añadir nuevos roles al servidor.')
     Embe.add_field(name='Otros nombres: addrole, rol', value='El uso correcto de este comando es ```-m rol (código hex del color)```')
     Embe.add_field(name='¿Cómo saber el valor hex de un color?', value='[Aquí](https://www.color-hex.com/) podrás encontrar una página en donde podrás encontrar los códigos hex para cada color, en caso que sea uno distinto, en la parte superior aparece una ventana en la cual podrás seleccionar el color de tu elección.', inline=False)
-    await ctx.send(embed=Embe)
+    Embe.set_image(url="attachment://colorhex.png")
+    await ctx.send(file=file,embed=Embe)
 @help.command(aliases=['Eliminar','eliminar','erol','eliminarrol'])
 async def eliminar_help(ctx):
     Embe = discord.Embed(title='Eliminar Rol', description='Este comando sirve para eliminar roles del mismo nombre del miembro del servidor.')
@@ -124,3 +139,4 @@ async def arol_qrol(ctx):
     await ctx.send(embed=Embe)
 #CORRER TOKEN
 client.run(TOKEN)
+
